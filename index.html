@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع تعليمي للوسائط والصيغ المتعددة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            height: 60px;
+            width: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav a:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .main-content {
+            padding: 60px 0;
+        }
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card.expandable {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .feature-card.expandable:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card.expandable .feature-description {
+            max-height: none;
+            overflow: visible;
+        }
+
+        .feature-card.expandable .additional-content {
+            opacity: 1;
+            transform: translateY(0);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .feature-card.expandable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+            background: rgba(255, 255, 255, 1);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .highlight-text {
+            background: linear-gradient(45deg, #ffeb3b, #ffc107);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .video-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            transition: none !important;
+        }
+
+        .video-container:hover {
+            transform: none !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .video-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .video-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-wrapper video {
+            background: #000;
+        }
+
+        .video-wrapper video::-webkit-media-controls {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 0 0 15px 15px;
+        }
+
+        .video-wrapper video::-webkit-media-controls-panel {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .video-container:hover .video-wrapper video {
+            filter: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .video-wrapper video {
+            transition: none !important;
+        }
+
+        .video-wrapper:hover {
+            transform: none !important;
+        }
+
+        .video-wrapper:hover video {
+            transform: none !important;
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
+        .video-section:hover .video-container {
+            transform: none !important;
+        }
+
+        .video-section:hover .video-wrapper {
+            transform: none !important;
+        }
+
+        video:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        video:hover {
+            transform: none !important;
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
+        video:active {
+            transform: none !important;
+        }
+
+        .jpeg-diagram-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .main-section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 100px 0 60px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-divider {
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            margin: 60px 0;
+            border-radius: 2px;
+        }
+
+        .diagram-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .diagram-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .diagram-image:hover {
+            transform: scale(1.02);
+        }
+
+        .video-wrapper:hover video {
+            filter: none !important;
+            opacity: 1 !important;
+            background: #000 !important;
+        }
+
+        .diagram-description {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 20px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-section-title {
+                font-size: 2.5rem;
+                margin: 60px 0 40px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .nav {
+                gap: 15px;
+            }
+
+            .nav a {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+
+            .video-title {
+                font-size: 2rem;
+            }
+
+            .video-description {
+                font-size: 1rem;
+            }
+
+            .video-container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+
+            .diagram-title {
+                font-size: 2rem;
+            }
+
+            .diagram-container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            .diagram-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="photo/3.webp" alt="شعار الموقع التعليمي">
+                    <div class="logo-text">الوسائط المتعددة ضغط الصور والفيديو</div>
+                </div>
+                <nav class="nav">
+                    <a href="#home">الصيغ</a>
+                    <a href="#formats">الدروس</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="hero-section" id="home">
+                <h1 class="hero-title">مرحباً بك في عالم الوسائط المتعددة</h1>
+                <p class="hero-subtitle">
+                    تعلم كل ما تحتاج معرفته عن ضغط الصور الثابتة والفيديو وتقنياتها
+                </p>
+                <a href="#formats" class="cta-button">اكتشف الصيغ المختلفة</a>
+            </section>
+
+            <h2 class="main-section-title">ضغط الصور الثابتة</h2>
+            <div class="section-divider"></div>
+
+            <section class="features" id="formats">
+                <div class="feature-card expandable">
+                    <div class="feature-icon">🖼️</div>
+                    <h3 class="feature-title">JPEG</h3>
+                    <p class="feature-description">
+                        اختصار لـ 'مجموعة خبراء التصوير المشتركة'، اللجنة التي أنشأت المعيار العالمي عام 1992.
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">دفعت الحاجة المتزايدة لمعالجة وتخزين الصور الرقمية</span> إلى تطوير خوارزميات فعالة للضغط.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            تعتمد تقنية JPEG على <span class="highlight-text">حيل ذكية مبنية على حدود الرؤية البشرية</span>، حيث أن العين أقل حساسية للترددات العالية.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card expandable">
+                    <div class="feature-icon">⚖️</div>
+                    <h3 class="feature-title">التكمية</h3>
+                    <p class="feature-description">
+                        إن التكمية هي المصدر الأساسي لضياع المعلومات في معيار JPEG.
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">التكمية</span> هي العملية التي يتم فيها تقليل دقة البيانات الرقمية.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            هذه العملية تؤدي إلى <span class="highlight-text">ضياع المعلومات</span> التي لا يمكن استردادها لاحقاً.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card expandable">
+                    <div class="feature-icon">🔤</div>
+                    <h3 class="feature-title">ترميز هوفمان</h3>
+                    <p class="feature-description">
+                        ترميز هوفمان يأخذ التسلسل النهائي ويعطي رموزاً أقصر للقيم المتكررة ورموزاً أطول للقيم النادرة، مما يزيد من الضغط.
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">ترميز هوفمان</span> هو خوارزمية ضغط بيانات تستخدم تردد الرموز.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            يعطي <span class="highlight-text">رموزاً أقصر</span> للقيم الأكثر تكراراً و<span class="highlight-text">رموزاً أطول</span> للقيم النادرة.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="jpeg-diagram-section">
+                <h2 class="diagram-title">حيل JPEG الخمس الذكية خطوة بخطوة</h2>
+                <div class="diagram-container">
+                    <img src="photo/51.webp" alt="المخطط الصندوقي لمرمز JPEG" class="diagram-image">
+                    <p class="diagram-description">
+                        يوضح هذا المخطط الخطوات الخمس الرئيسية لضغط الصور في تنسيق JPEG، من تحويل فضاء الألوان إلى الترميز النهائي
+                    </p>
+                </div>
+            </section>
+            <section class="jpeg-diagram-section">
+                <h2 class="diagram-title">مقارنة الفرق قبل التكمية وبعدها </h2>
+                <div class="diagram-container">
+                    <img src="photo/52.webp" alt="معلومات إضافية عن تقنيات الضغط" class="diagram-image">
+                    <p class="diagram-description">
+                        معلومات  مهمة حول التكمية 
+                    </p>
+                </div>
+            </section>
+            <section class="jpeg-diagram-section">
+                <h2 class="diagram-title">أنماط JPEG المختلفة</h2>
+                <div class="diagram-container">
+                    <img src="photo/53.webp" alt="معلومات تقنية إضافية" class="diagram-image">
+                    <p class="diagram-description">
+                        معلومات حول أنماط JPEG المختلفة
+                    </p>
+                </div>
+            </section>
+            <section class="video-section" id="image-tutorials">
+                <h2 class="video-title">فيديو تعليمي عن ضغط الصور الثابتة</h2>
+                <p class="video-description">
+                    شاهد هذا الفيديو التعليمي لفهم المزيد عن تقنيات ضغط الصور الثابتة
+                </p>
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <video 
+                            controls 
+                            preload="metadata"
+                            poster="photo/51.webp"
+                            title="فيديو تعليمي عن ضغط الصور الثابتة">
+                            <source src="videos/القسم الاول ضغط  الصورة الثابتة.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                </div>
+            </section>
+            <h2 class="main-section-title">ضغط الفيديو</h2>
+            <div class="section-divider"></div>
+            <section class="features" id="video-formats">
+                <div class="feature-card expandable">
+                    <div class="feature-icon">🔮</div>
+                    <h3 class="feature-title">تنبئ ب الحركة</h3>
+                    <p class="feature-description">
+                        بدلاً من مجرد إيجاد الفروقات، يمكننا التنبؤ بمكان تحرك الأشياء من إطار إلى آخر. هذا هو "تعويض الحركة".
+                    </p>
+                    <p style="margin-top: 10px; font-weight: bold; color: #667eea; font-size: 1.1rem;">
+                        القفزة النوعية في الضغط
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">التنبؤ بالحركة</span> هو تقنية أساسية في ضغط الفيديو، حيث يتم تحليل حركة الكائنات بين الإطارات المتتالية.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            هذه التقنية تسمح بـ تخزين معلومات التغيير فقط بدلاً من الإطار بأكمله.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card expandable">
+                    <div class="feature-icon">🎬</div>
+                    <h3 class="feature-title">MPEG-1</h3>
+                    <p class="feature-description">
+                        أول معيار MPEG للضغط الرقمي، تم تطويره في أوائل التسعينيات لضغط الفيديو والصوت معاً.
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">MPEG-1</span> يستخدم ضغط بين الإطارات (inter-frame compression) لتقليل التكرار الزمني.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            يتم تقسيم الفيديو إلى مجموعات من الصور (GOP) ويتم ضغطها باستخدام تقنيات مثل DCT و Huffman.
+                        </p>
+                    </div>
+                </div>
+                <div class="feature-card expandable">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">B-Frame (إطار ثنائي الاتجاه)</h3>
+                    <p class="feature-description">
+                        يستخدم معلومات من إطار سابق وإطار مستقبلي لإنشاء تنبؤ أكثر دقة وأخف وزناً من حيث البيانات.
+                    </p>
+                    <div class="additional-content">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <span class="highlight-text">B-Frame</span> يعتمد على الإطارات المرجعية السابقة والمستقبلية لتحسين الضغط.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            يوفر <span class="highlight-text">تنبؤ أكثر دقة</span> مع <span class="highlight-text">حجم بيانات أقل</span> مقارنة بالإطارات الأخرى.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="jpeg-diagram-section">
+                <h2 class="diagram-title">تقنيات ضغط الفيديو</h2>
+                <div class="diagram-container">
+                    <img src="photo/61.webp" alt="تقنيات ضغط الفيديو" class="diagram-image">
+                    <p class="diagram-description">
+                        يوضح هذا المخطط التقنيات المختلفة المستخدمة في ضغط الفيديو الرقمي
+                    </p>
+                </div>
+            </section>
+            <section class="jpeg-diagram-section">
+                <h2 class="diagram-title">مقارنة معايير الفيديو</h2>
+                <div class="diagram-container">
+                    <img src="photo/62.webp" alt="مقارنة معايير الفيديو" class="diagram-image">
+                    <p class="diagram-description">
+                        مقارنة بين المعايير المختلفة لضغط الفيديو من حيث الجودة والكفاءة
+                    </p>
+                </div>
+            </section>
+            <section class="video-section" id="video-tutorials">
+                <h2 class="video-title">فيديو تعليمي عن ضغط الفيديو</h2>
+                <p class="video-description">
+                    شاهد هذا الفيديو التعليمي لفهم المزيد عن تقنيات ضغط الفيديو
+                </p>
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <video 
+                            controls 
+                            preload="metadata"
+                            poster="photo/61.webp"
+                            title="فيديو تعليمي عن ضغط الفيديو">
+                            <source src="videos/ضغط الفيديو  السحر خلف شاشتك.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="photo/3.webp" alt="شعار الموقع التعليمي">
+                    <span>الوسائط المتعددة في الجامعة الإفتراضية السورية -الهندسة المعلوماتية  - جميع الحقوق محفوظة © 2025</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
